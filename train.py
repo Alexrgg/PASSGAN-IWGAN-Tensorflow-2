@@ -254,7 +254,11 @@ class DatasetPipeline:
 
         ds = self.dataset_cache(ds)
         ds = ds.shuffle(50000, reshuffle_each_iteration=True)
-        ds = ds.apply(tf.data.experimental.unbatch())
-        ds = ds.batch(self.batch_size, drop_remainder=False)
+        #ds = ds.apply(tf.data.experimental.unbatch())
+        print(ds)
+        ds = ds.unbatch()
+        print(ds)
         ds = ds.prefetch(tf.data.experimental.AUTOTUNE)
+        #ds = ds.batch(self.batch_size, drop_remainder=False)
+        ds = ds.prefetch(tf.data.AUTOTUNE)
         return ds
